@@ -283,3 +283,37 @@ int CVirtualDiskInfoTable::SetVDFSType(uint32_t& vdID, const string& vdFSType)
 
     return 0;
 }
+
+int CVirtualDiskInfoTable::DeleteVirtualDiskInfo(uint32_t& vdID)
+{
+	if(!m_pDB) 
+    {
+        cout<<"Invalid Sqlite"<<endl;
+        return -1;
+    }    
+
+    try
+    {
+        char buf[MAX_BUF_LEN];
+        memset(buf, 0, MAX_BUF_LEN);
+        int vID = (int)(vdID);
+        if(IsServerInfoExist("ID", vID))
+        {
+            sprintf(buf, 
+                "delete from %s where ID = %d", 
+                    m_strTableName.c_str(), vID);
+        }
+        else
+        {
+            cerr<<"CVirtualDiskInfoTable::DeleteVirtualDiskInfo: the vdID is not exist"<<endl;
+        	return -1;
+       	}
+        m_pDB->execDML(buf);
+    }
+    catch(CppSQLite3Exception e)
+    {
+        cerr<<"CVirtualDiskInfoTable::DeleteVirtualDiskInfo:"<<e.errorCode()<<" "<<e.errorMessage()<<endl;
+    }
+
+    return 0;
+}

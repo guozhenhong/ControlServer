@@ -48,6 +48,8 @@ public:
     int SetVDStatus(uint32_t& vdID, const string& vdStatus);
     int SetVDFSType(uint32_t& vdID, const string& vdFSType);
 
+    int DeleteVirtualDiskInfo(uint32_t& vdID);
+
 private:
     int GetCapacityInfo(const char* buf, sCapacityInfo *pInfo);
     int SetVDCapInfoByOneField(uint32_t& vdID, const char* field, uint64_t& value);
