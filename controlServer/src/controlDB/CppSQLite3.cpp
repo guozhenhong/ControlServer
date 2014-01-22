@@ -393,7 +393,7 @@ long long CppSQLite3Query::getInt64Field(int nField, long long nNullValue/*=0*/)
 long long CppSQLite3Query::getInt64Field(const char* szField, long long nNullValue/*=0*/)
 {
 	int nField = fieldIndex(szField);
-	return getIntField(nField, (int)nNullValue);
+	return getInt64Field(nField, (int)nNullValue);
 }
 
 

@@ -85,6 +85,8 @@ void RegisterServerInfoTask::recvWorkItem( ThreadPoolWorkItem* pWorkItem)
         pWorkItem = NULL;
     }
 
+    TaskManager::getInstance()->recycle(getID());  
+
 	return;
 }
 
@@ -94,3 +96,8 @@ int RegisterServerInfoTask::setAgent(ControlAgent *agent)
 
     return 0;
 }
+
+// BaseTask* RegisterServerInfoTask::createTask()
+// {
+//     return TaskManager::getInstance()->create<RegisterServerInfoTask>();
+// }

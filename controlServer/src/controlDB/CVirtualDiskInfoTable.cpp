@@ -52,7 +52,7 @@ int CVirtualDiskInfoTable::GetVDCapacityInfo(uint32_t& vdID, sCapacityInfo* pInf
     return GetCapacityInfo(buf, pInfo);
 }
 
-int CVirtualDiskInfoTable::CreateVirtualDiskInfo(sCapacityInfo* pInfo, const string& fsType, const string& vdStatus, uint32_t& vdID)
+int CVirtualDiskInfoTable::CreateVirtualDiskInfo(sCapacityInfo* pInfo, uint32_t& iFsType, const string& vdStatus, uint32_t& vdID)
 {
 	if(!m_pDB) 
     {
@@ -64,6 +64,7 @@ int CVirtualDiskInfoTable::CreateVirtualDiskInfo(sCapacityInfo* pInfo, const str
     {
         char buf[MAX_BUF_LEN];
         memset(buf, 0, MAX_BUF_LEN);
+        string fsType;
         // if(IsServerInfoExist("ID", (int)vdID))
         // {
         //     sprintf(buf, "update %s set declaredCapacity = %"PRIu64", 
@@ -74,7 +75,14 @@ int CVirtualDiskInfoTable::CreateVirtualDiskInfo(sCapacityInfo* pInfo, const str
         // }
         // else
         // {
-        sprintf(buf, "insert into %s (declaredCapacity, usedCapacity, usedCapacityByFS, fsType, vdStatus) values (%"PRIu64", %"PRIu64", %"PRIu64", %s, %s)", m_strTableName.c_str(), pInfo->m_sumCap, pInfo->m_declaredCap, pInfo->m_usedCap, fsType.c_str(), vdStatus.c_str());
+        if(iFsType == 1)
+            fsType = "FAT16";
+        else if(iFsType == 2)
+            fsType = "FAT32";
+        else if(iFsType == 3)
+            fsType = "NTFS";
+
+        sprintf(buf, "insert into %s (declaredCapacity, usedCapacity, usedCapacityByFS, fsType, vdStatus) values (%"PRIu64", %"PRIu64", %"PRIu64", '%s', '%s')", m_strTableName.c_str(), pInfo->m_sumCap, pInfo->m_declaredCap, pInfo->m_usedCap, fsType.c_str(), vdStatus.c_str());
        // }
         m_pDB->execDML(buf);
         int  i = GetCurrentLastID();
@@ -124,7 +132,7 @@ int CVirtualDiskInfoTable::SetVDCapacityInfo(uint32_t& vdID, sCapacityInfo* pInf
         else
         {
         	cerr<<"CVirtualDiskInfoTable::SetVDCapacityInfo: the vdID is not exist"<<endl;
-        	return -1;
+        	return 0;
         }
         m_pDB->execDML(buf);
     }
@@ -306,7 +314,7 @@ int CVirtualDiskInfoTable::DeleteVirtualDiskInfo(uint32_t& vdID)
         else
         {
             cerr<<"CVirtualDiskInfoTable::DeleteVirtualDiskInfo: the vdID is not exist"<<endl;
-        	return -1;
+        	return 0;
        	}
         m_pDB->execDML(buf);
     }

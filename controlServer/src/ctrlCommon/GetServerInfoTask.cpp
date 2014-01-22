@@ -64,7 +64,9 @@ void GetServerInfoTask::recvWorkItem( ThreadPoolWorkItem* pWorkItem)
         delete pWorkItem;                                                        
         pWorkItem = NULL;                                                        
     }                                                                            
-                                                                                 
+             
+    TaskManager::getInstance()->recycle(getID());  
+                                                                        
     return;                                                                      
 }                                                                                
                                                                                  
@@ -74,3 +76,9 @@ int GetServerInfoTask::setAgent(ControlAgent *agent)
                                                                                  
     return 0;                                                                    
 }  
+
+
+// BaseTask* GetServerInfoTask::createTask()
+// {
+//     return TaskManager::getInstance()->create<GetServerInfoTask>();
+// }

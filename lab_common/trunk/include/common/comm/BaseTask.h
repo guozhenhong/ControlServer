@@ -21,10 +21,12 @@
 #include <stdint.h>
 
 #include "common/comm/Error.h"
+#include "common/comm/TaskManager.h"
 
 struct InReq;
 class ThreadPoolWorkItem;
 class Message;
+class ControlAgent;
 
 class BaseTask
 {
@@ -54,6 +56,14 @@ public:
 
     //add for threadPool
     virtual void recvWorkItem( ThreadPoolWorkItem* ) {}
+
+    virtual int setAgent(ControlAgent* agent) = 0;
+    
+    template <typename T> 
+    static BaseTask *createTask()
+    {
+        return TaskManager::getInstance()->create<T>();
+    }
 
 private:
     uint64_t m_ID;

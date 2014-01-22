@@ -3,6 +3,7 @@
 
 #include <map>
 #include <list>
+#include <string>
 #include <stdint.h>
 
 #include "common/sys/Singleton.h"
@@ -18,8 +19,10 @@ class AgentManager: public Singleton<AgentManager>
 public:
     //add a agent to agentManager.
     uint32_t add( Agent* const );
+    uint32_t add(std::string, Agent* const);
     //get a agent base on id.
     Agent* get( uint32_t ) const;
+    Agent* get(std::string ) const;
     //find is there have a agent's ID is id.
     bool find( uint32_t ) const;
     //agentmanager will not manager the agent.
@@ -46,12 +49,14 @@ private:
 private:
     typedef std::map<uint32_t, Agent*> AgentMap;
     typedef std::list<Agent*> AgentList;
+    typedef std::map<std::string, uint32_t> AgentNamedMap;
 
     uint32_t generateID( void );
 
     uint32_t m_agentID;
     AgentMap m_map;
     AgentList m_recycleList;
+    AgentNamedMap m_namedMap;
 };
 
 template<typename T>

@@ -11,6 +11,11 @@ typedef struct capInfo
     uint64_t m_sumCap;
     uint64_t m_declaredCap;
     uint64_t m_usedCap;
+    capInfo() : m_sumCap(0), m_declaredCap(0), m_usedCap(0)
+    {}
+    capInfo(uint64_t s, uint64_t d, uint64_t u) : m_sumCap(s), m_declaredCap(d), m_usedCap(u)
+    {}
+
 }sCapacityInfo;
 
 

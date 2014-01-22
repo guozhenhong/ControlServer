@@ -7,6 +7,7 @@
 
 #define DEFAULT_SERVER_INFO_TABLE "Server_Info_Table"
 #define DEFAULT_DISK_INFO_TABLE "Disk_Info_Table" 
+#define DEFAULT_STORAGE_INFO_TABLE "SU_Info_Table"
 
 using namespace std;
 

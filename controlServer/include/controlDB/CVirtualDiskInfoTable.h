@@ -15,8 +15,8 @@
  *
  * =====================================================================================
  */
-#ifndef CSUINFOTABLE_H
-#define CSUINFOTABLE_H
+#ifndef CVDINFOTABLE_H
+#define CVDINFOTABLE_H
 
 #include <stdint.h>
 #include <string>
@@ -37,7 +37,7 @@ public:
 
     int GetVDCapacityInfo(uint32_t& vdID, sCapacityInfo* pInfo);
 
-    int CreateVirtualDiskInfo(sCapacityInfo* pInfo, const string& fsType, const string& vdStatus, uint32_t& vdID);
+    int CreateVirtualDiskInfo(sCapacityInfo* pInfo, uint32_t& iFsType, const string& vdStatus, uint32_t& vdID);
 
     int SetVDCapacityInfo(uint32_t& vdID, sCapacityInfo* pInfo);
     

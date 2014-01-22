@@ -20,6 +20,8 @@
 #include "ctrlCommon/RegisterServerInfoTask.h"
 #include "controlDB/CCtrlDBHandler.h"
 #include "controlDB/CServerInfoTable.h"
+#include "controlDB/CStorageUnitInfoTable.h"
+#include "controlDB/CVirtualDiskInfoTable.h"
 #include <iostream>
 #include <stdlib.h>
 #include <signal.h>
@@ -76,6 +78,8 @@ int main(int argc, char** argv)
     pListenAgent->init();
     CCtrlDBHandler::getInstance()->OpenDBFile("CtrlServerDB.db");
     CCtrlDBHandler::getInstance()->RegisterTable(DEFAULT_SERVER_INFO_TABLE, new CServerInfoTable());
+    CCtrlDBHandler::getInstance()->RegisterTable(DEFAULT_STORAGE_INFO_TABLE, new CStorageUnitInfoTable());
+    CCtrlDBHandler::getInstance()->RegisterTable(DEFAULT_DISK_INFO_TABLE, new CVirtualDiskInfoTable());
     
    /*pControlAgent->RegisterSerializer(MSG_REGISTER_SERVER, new RegisterServerMsgSerializer());
     pControlAgent->RegisterDeserializer(MSG_REGISTER_SERVER, new RegisterServerMsgDeserializer());

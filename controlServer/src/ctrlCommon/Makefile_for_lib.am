@@ -1,0 +1,19 @@
+INCLUDES = -I$(top_srcdir)/include -I$(top_srcdir)/../lab_common/trunk/include
+###bin_PROGRAMS = $(top_srcdir)/bin/server
+noinst_LIBRARIES = $(top_srcdir)/lib/libctrlserver.a
+__top_srcdir__lib_libctrlserver_a_SOURCES = ControlAgent.cpp \
+				 					RegisterServerInfoTask.cpp \
+				 					RegisterWorkItem.cpp \
+				 					MultiMsgDeserializer.cpp \
+				 					MultiMsgSerializer.cpp \
+									GetServerInfoTask.cpp \
+									GetServerInfoWorkItem.cpp \
+									GetSysCapInfoWorkItem.cpp \
+									GetSysCapacityInfoTask.cpp \
+									SetNodeCapInfoWorkItem.cpp \
+									SetNodeCapacityInfoTask.cpp \
+									GetSUCapacityInfoWorkItem.cpp \
+									GetSUCapacityInfoTask.cpp \
+				 					####server.cpp
+__top_srcdir__lib_libctrlserver_a_LIBADD = $(top_srcdir)/../lab_common/trunk/lib/libcommon.la \
+			   						../controlDB/libdb.la

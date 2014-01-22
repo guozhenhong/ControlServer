@@ -19,6 +19,7 @@
 #define REGISTERSERVERINFOTASK_H
 
 #include "common/comm/BaseTask.h"
+#include "common/comm/TaskManager.h"
 
 class Message;
 class ControlAgent;
@@ -38,6 +39,7 @@ public:
 
     int setAgent(ControlAgent * agent);
 
+    // static BaseTask* createTask();
 private:
     ControlAgent *m_pAgent;
     Message *m_pMsg;

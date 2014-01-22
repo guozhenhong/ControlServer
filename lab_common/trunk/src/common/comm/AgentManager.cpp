@@ -9,6 +9,7 @@
 
 #include <cstdio>
 using std::for_each;
+using namespace std;
 
 namespace
 {
@@ -31,7 +32,8 @@ struct AgentDeleter
 AgentManager::AgentManager():
     m_agentID( 0 ),
     m_map(),
-    m_recycleList()
+    m_recycleList(),
+    m_namedMap()
 {
 }
 
@@ -45,7 +47,15 @@ uint32_t AgentManager::add( Agent* agent )
     uint32_t id = generateID();
     m_map[id] = agent;
     agent->setID( id );
+    std::<<cout<<"In AgentManager::add the id is "<<id<<"the agent is "<<agent<<std::endl;
+
     return id;
+}
+
+uint32_t AgentManager::add(string name, Agent* agent )
+{
+    m_namedMap[name] = agent->getID();
+    return 0;
 }
 
 Agent* AgentManager::get( uint32_t id )const
@@ -58,6 +68,18 @@ Agent* AgentManager::get( uint32_t id )const
     }
     return agent;
 }
+
+Agent* AgentManager::get( string name )const
+{
+    Agent* agent = NULL;
+    AgentNamedMap::const_iterator it = m_namedMap.find( name );
+    if ( it != m_namedMap.end() )
+    {
+        agent = get(it->second);
+    }
+    return agent;
+}
+
 
 bool AgentManager::find( uint32_t id )const
 {
@@ -72,6 +94,17 @@ bool AgentManager::find( uint32_t id )const
 bool AgentManager::remove( uint32_t id )
 {
     AgentMap::size_type eraseCount = m_map.erase( id );
+    AgentNamedMap::iterator it = m_namedMap.begin();
+    while(it != m_namedMap.end())
+    {
+        if((it->second) == id)
+        {
+            m_namedMap.erase(it);
+            break;
+        }
+
+        ++it;
+    }
     return ( eraseCount != 0 );
 }
 

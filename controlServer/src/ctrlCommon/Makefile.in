@@ -49,7 +49,23 @@ am___top_srcdir__bin_server_OBJECTS = ControlAgent.$(OBJEXT) \
 	RegisterServerInfoTask.$(OBJEXT) RegisterWorkItem.$(OBJEXT) \
 	MultiMsgDeserializer.$(OBJEXT) MultiMsgSerializer.$(OBJEXT) \
 	GetServerInfoTask.$(OBJEXT) GetServerInfoWorkItem.$(OBJEXT) \
-	server.$(OBJEXT)
+	GetSysCapInfoWorkItem.$(OBJEXT) \
+	GetSysCapacityInfoTask.$(OBJEXT) \
+	SetNodeCapInfoWorkItem.$(OBJEXT) \
+	SetNodeCapacityInfoTask.$(OBJEXT) \
+	GetSUCapacityInfoWorkItem.$(OBJEXT) \
+	GetSUCapacityInfoTask.$(OBJEXT) \
+	ManageServerCreateVDTask.$(OBJEXT) SetVDInfoWorkItem.$(OBJEXT) \
+	RecvVDFormatResTask.$(OBJEXT) \
+	RecvVDLocateNodeInfoTask.$(OBJEXT) \
+	GetVDCapacityInfoWorkItem.$(OBJEXT) \
+	GetVDCapacityInfoTask.$(OBJEXT) \
+	ManageServerCreateOneVDTask.$(OBJEXT) \
+	ManageServerCreateBatchVDTask.$(OBJEXT) \
+	ManageServerDeleteOneVDTask.$(OBJEXT) \
+	ManageServerDeleteBatchVDTask.$(OBJEXT) \
+	ManageServerDeleteVDTask.$(OBJEXT) \
+	RecvVDDeleteResTask.$(OBJEXT) server.$(OBJEXT)
 __top_srcdir__bin_server_OBJECTS =  \
 	$(am___top_srcdir__bin_server_OBJECTS)
 __top_srcdir__bin_server_DEPENDENCIES =  \
@@ -196,6 +212,24 @@ __top_srcdir__bin_server_SOURCES = ControlAgent.cpp \
 				 					MultiMsgSerializer.cpp \
 									GetServerInfoTask.cpp \
 									GetServerInfoWorkItem.cpp \
+									GetSysCapInfoWorkItem.cpp \
+									GetSysCapacityInfoTask.cpp \
+									SetNodeCapInfoWorkItem.cpp \
+									SetNodeCapacityInfoTask.cpp \
+									GetSUCapacityInfoWorkItem.cpp \
+									GetSUCapacityInfoTask.cpp \
+									ManageServerCreateVDTask.cpp \
+									SetVDInfoWorkItem.cpp \
+									RecvVDFormatResTask.cpp \
+									RecvVDLocateNodeInfoTask.cpp \
+									GetVDCapacityInfoWorkItem.cpp \
+									GetVDCapacityInfoTask.cpp \
+									ManageServerCreateOneVDTask.cpp \
+									ManageServerCreateBatchVDTask.cpp \
+									ManageServerDeleteOneVDTask.cpp \
+									ManageServerDeleteBatchVDTask.cpp \
+									ManageServerDeleteVDTask.cpp \
+									RecvVDDeleteResTask.cpp \
 				 					server.cpp
 
 __top_srcdir__bin_server_LDADD = $(top_srcdir)/../lab_common/trunk/lib/libcommon.la \
@@ -276,12 +310,30 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ControlAgent.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/GetSUCapacityInfoTask.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/GetSUCapacityInfoWorkItem.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/GetServerInfoTask.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/GetServerInfoWorkItem.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/GetSysCapInfoWorkItem.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/GetSysCapacityInfoTask.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/GetVDCapacityInfoTask.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/GetVDCapacityInfoWorkItem.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ManageServerCreateBatchVDTask.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ManageServerCreateOneVDTask.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ManageServerCreateVDTask.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ManageServerDeleteBatchVDTask.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ManageServerDeleteOneVDTask.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ManageServerDeleteVDTask.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/MultiMsgDeserializer.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/MultiMsgSerializer.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/RecvVDDeleteResTask.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/RecvVDFormatResTask.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/RecvVDLocateNodeInfoTask.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/RegisterServerInfoTask.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/RegisterWorkItem.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/SetNodeCapInfoWorkItem.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/SetNodeCapacityInfoTask.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/SetVDInfoWorkItem.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/server.Po@am__quote@
 
 .cpp.o:

@@ -1,4 +1,4 @@
 AUTOMAKE_OPTIONS = foreign
 ACLOCAL_AMFLAGS = -I m4
 SUBDIRS = src 
-EXTRA_DIST = include bin build 
+EXTRA_DIST = include bin build lib 

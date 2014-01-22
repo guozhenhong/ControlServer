@@ -65,8 +65,33 @@ int CStorageUnitInfoTable::GetSysCapacityInfo(sCapacityInfo *pInfo)
     char buf[MAX_BUF_LEN];
     memset(buf, 0, MAX_BUF_LEN);
     sprintf(buf, "select sum(sumCapacity), sum(declaredCapacity), sum(usedCapacity) from %s", m_strTableName.c_str());
+    if(!m_pDB) 
+    {
+        cout<<"Invalid Sqlite"<<endl;
+        return -1;
+    }    
 
-    return GetCapacityInfo(buf, pInfo);
+    try
+    {
+        CppSQLite3Query q = m_pDB->execQuery(buf);
+        if(!q.eof())
+        {
+            pInfo->m_sumCap = q.getInt64Field(0);
+            pInfo->m_declaredCap = q.getInt64Field(1);
+            pInfo->m_usedCap = q.getInt64Field(2);
+        }
+        else
+           return -1; 
+
+    }
+
+    catch(CppSQLite3Exception e)
+    {
+        cerr<<"CStorageUnitInfoTable::GetSysCapacityInfo:"<<e.errorCode()<<" "<<e.errorMessage()<<endl;
+    }
+
+
+    return 0;
 }
 
 int CStorageUnitInfoTable::GetNodeCapacityInfo(const string& nodeName, sCapacityInfo *pInfo)

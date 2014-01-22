@@ -23,6 +23,9 @@
 
 #include <map>
 #include <string>
+#include <stdint.h>
+
+typedef BaseTask* (*pTaskCreateFunction)();
 
 class MessageSerializer;
 class MessageDeserializer;
@@ -49,14 +52,20 @@ public:
 
     int RegisterSerializer(unsigned long msgID, MessageSerializer *pSerializer);
     int RegisterDeserializer(unsigned long msgID, MessageDeserializer *pDeserializer);
-    int RegisterWorkTask(unsigned long msgID, BaseTask *pTask);
+    int RegisterTaskCreateFunc(unsigned long msgID, pTaskCreateFunction pFunc);
     void SendMsg(Message *pMsg);
+
+    void SendMsgToServer(const std::string& name, Message *pMsg);
+    void Dispatch(uint32_t cmd, Message *pMsg);
+
+//private:
+    BaseTask *GetTaskObject(uint32_t cmd);
 
 private:
 	MultiMsgDeserializer *m_pDeserializer;
 	MultiMsgSerializer *m_pSerializer;
         
-    std::map<unsigned long, BaseTask *> m_WorkTaskTable;
+    std::map<unsigned long, pTaskCreateFunction> m_WorkTaskCreaterTable;
     std::string m_strOppositeName;
 };
 

@@ -49,7 +49,7 @@ public:
     void recycle( uint64_t );
     //destructor the  task in recycle list.
     void recycleAll( void );
-
+    
 	void clearAllTask();
 
     //set the ID generator.
@@ -57,7 +57,7 @@ public:
     IDGenerator setIDGenerator( const IDGenerator& );
     //get the current ID generator
     IDGenerator getIDGenerator( void )const;
-
+    
 private:
     typedef std::map<uint64_t, BaseTask*> TaskMap;
     typedef std::list<BaseTask*> TaskList;
