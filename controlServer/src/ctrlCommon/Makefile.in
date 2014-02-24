@@ -65,7 +65,9 @@ am___top_srcdir__bin_server_OBJECTS = ControlAgent.$(OBJEXT) \
 	ManageServerDeleteOneVDTask.$(OBJEXT) \
 	ManageServerDeleteBatchVDTask.$(OBJEXT) \
 	ManageServerDeleteVDTask.$(OBJEXT) \
-	RecvVDDeleteResTask.$(OBJEXT) server.$(OBJEXT)
+	RecvVDDeleteResTask.$(OBJEXT) \
+	RecvVDSumFormatCapChangeResTask.$(OBJEXT) \
+	ChangeVDSumCapTask.$(OBJEXT) server.$(OBJEXT)
 __top_srcdir__bin_server_OBJECTS =  \
 	$(am___top_srcdir__bin_server_OBJECTS)
 __top_srcdir__bin_server_DEPENDENCIES =  \
@@ -230,6 +232,8 @@ __top_srcdir__bin_server_SOURCES = ControlAgent.cpp \
 									ManageServerDeleteBatchVDTask.cpp \
 									ManageServerDeleteVDTask.cpp \
 									RecvVDDeleteResTask.cpp \
+									RecvVDSumFormatCapChangeResTask.cpp \
+									ChangeVDSumCapTask.cpp \
 				 					server.cpp
 
 __top_srcdir__bin_server_LDADD = $(top_srcdir)/../lab_common/trunk/lib/libcommon.la \
@@ -309,6 +313,7 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ChangeVDSumCapTask.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/ControlAgent.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/GetSUCapacityInfoTask.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/GetSUCapacityInfoWorkItem.Po@am__quote@
@@ -329,6 +334,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/RecvVDDeleteResTask.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/RecvVDFormatResTask.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/RecvVDLocateNodeInfoTask.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/RecvVDSumFormatCapChangeResTask.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/RegisterServerInfoTask.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/RegisterWorkItem.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/SetNodeCapInfoWorkItem.Po@am__quote@

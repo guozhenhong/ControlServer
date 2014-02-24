@@ -1,26 +1,24 @@
 #include <iostream>
 #include "controlDB/CCtrlDBHandler.h"
 #include "controlDB/CVirtualDiskInfoTable.h"
-#include "controlDB/CTableHandler.h"
 #include "ctrlCommon/GetVDCapacityInfoWorkItem.h"
 #include "common/comm/Error.h"
 #include "common/log/log.h"
 
-GetVDCapacityInfoWorkItem::GetVDCapacityInfoWorkItem(GetVDCapacityInfoMessage *p) : m_pMsg(p), m_pACKMsg(NULL)
+GetVDCapacityInfoWorkItem::GetVDCapacityInfoWorkItem(uint32_t vdID) : m_iVDID(vdID), m_pCapInfo(NULL)
 {
 
 }
 
 GetVDCapacityInfoWorkItem::~GetVDCapacityInfoWorkItem()
 {
+    if(m_pCapInfo)
+        delete m_pCapInfo;
 }
 
 int
 GetVDCapacityInfoWorkItem::process()
 {
-	if(!m_pMsg)
-		return -1;
-
     std::cout<<"In GetVDCapacityInfoWorkItem::process()"<<std::endl;
 
     CTableHandler* p = CCtrlDBHandler::getInstance()->GetTableHandler(DEFAULT_DISK_INFO_TABLE);
@@ -30,30 +28,43 @@ GetVDCapacityInfoWorkItem::process()
     if(!pVDInfoTable)
         return -1;
 
-    sCapacityInfo *pInfo = new sCapacityInfo();
-    int rt = pVDInfoTable->GetVDCapacityInfo(m_pMsg->m_iVDID, pInfo);
+    m_pCapInfo = new sCapacityInfo();
+    int rt = pVDInfoTable->GetVDCapacityInfo(m_iVDID, m_pCapInfo);
     if(0 > rt)
     {
         std::cout<<"GetVDCapacityInfo db operator error!"<<std::endl;
         return -1;
     }
 
-	m_pACKMsg = new GetVDCapacityInfoACKMessage();
+    std::cout<<"result is "<<m_iVDID<<" "<<m_pCapInfo->m_sumCap<<" "<<m_pCapInfo->m_declaredCap<<" "<<m_pCapInfo->m_usedCap<<std::endl;
 
-    m_pACKMsg->m_iVDID = m_pMsg->m_iVDID; 
-    m_pACKMsg->m_decCapacity = pInfo->m_sumCap;
-    m_pACKMsg->m_usedCapacity = pInfo->m_declaredCap;
-    m_pACKMsg->m_realUsedCapacityByFileSys = pInfo->m_usedCap;
-
-    std::cout<<"result is "<<m_pMsg->m_iVDID<<" "<<pInfo->m_sumCap<<" "<<pInfo->m_declaredCap<<" "<<pInfo->m_usedCap<<std::endl;
-
-    delete pInfo;
-	 
     return 0;
 }
 
 GetVDCapacityInfoACKMessage* 
 GetVDCapacityInfoWorkItem::GetACKMessage()
+{   
+    GetVDCapacityInfoACKMessage*  pACKMsg = new GetVDCapacityInfoACKMessage();
+
+    pACKMsg->m_iVDID = m_iVDID; 
+    pACKMsg->m_decCapacity = m_pCapInfo->m_sumCap;
+    pACKMsg->m_usedCapacity = m_pCapInfo->m_declaredCap;
+    pACKMsg->m_realUsedCapacityByFileSys = m_pCapInfo->m_usedCap;
+
+	return pACKMsg;
+}
+
+uint64_t GetVDCapacityInfoWorkItem::GetDeclaredCapacity()
 {
-	return m_pACKMsg;
+    return m_pCapInfo->m_sumCap;
+}
+
+uint64_t GetVDCapacityInfoWorkItem::GetUsedCapacity()
+{
+    return m_pCapInfo->m_declaredCap;
+}
+
+uint64_t GetVDCapacityInfoWorkItem::GetRealUsedCapacity()
+{
+    return m_pCapInfo->m_usedCap;
 }

@@ -24,7 +24,7 @@ public:
     SetVDInfoWorkItem(ManageServerCreateVDMessage *p);
     SetVDInfoWorkItem(SetVDStatusMessage *p);
     // SetVDInfoWorkItem(uint32_t vdID, uint32_t cmd, uint32_t value);
-    // SetVDInfoWorkItem(uint32_t vdID, uint32_t cmd, uint64_t value = 0);
+    SetVDInfoWorkItem(uint32_t cmd, uint32_t vdID, uint64_t value);
     // SetVDInfoWorkItem(uint32_t vdID, uint32_t cmd, const string& value);
 
     ~SetVDInfoWorkItem();
@@ -39,6 +39,7 @@ private:
     uint32_t m_iOPRes;
     uint32_t m_iCmd;
     uint32_t m_iVDID;
+    uint64_t m_iValue;
 };
 
 #endif 

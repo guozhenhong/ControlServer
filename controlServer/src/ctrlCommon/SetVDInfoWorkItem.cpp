@@ -7,25 +7,25 @@
 #include "common/log/log.h"
 
 SetVDInfoWorkItem::SetVDInfoWorkItem(ManageServerCreateVDMessage *p):
-     m_pMsg(p), m_iOPRes(0), m_iCmd(CREATE_VD)
+     m_pMsg(p), m_iOPRes(0), m_iCmd(CREATE_VD), m_iValue(0)
 {
 
 }
 
 SetVDInfoWorkItem::SetVDInfoWorkItem(SetVDStatusMessage *p):
-    m_pMsg(p), m_iOPRes(0), m_iCmd(CH_STATUS)
+    m_pMsg(p), m_iOPRes(0), m_iCmd(CH_STATUS), m_iValue(0)
 {
 
 }
 
-// SetVDInfoWorkItem::SetVDInfoWorkItem(uint32_t vdID, uint32_t cmd, uint64_t value = 0)
-// {
-//     m_pMsg = NULL;
-//     m_iVDID = vdID;
-//     m_iCmd = cmd;
-//     m_iValue = value;
-//     m_iOPRes = 0;
-// }
+SetVDInfoWorkItem::SetVDInfoWorkItem(uint32_t cmd, uint32_t vdID, uint64_t value)
+{
+    m_pMsg = NULL;
+    m_iVDID = vdID;
+    m_iCmd = cmd;
+    m_iValue = value;
+    m_iOPRes = 0;
+}
 
 // SetVDInfoWorkItem::SetVDInfoWorkItem(uint32_t vdID, uint32_t cmd, const string& value)
 // {
@@ -43,12 +43,7 @@ SetVDInfoWorkItem::~SetVDInfoWorkItem()
 int
 SetVDInfoWorkItem::process()
 {
-	if(m_pMsg == NULL)
-    {
-        return -1;
-    }
-
-    CTableHandler* p = CCtrlDBHandler::getInstance()->GetTableHandler(DEFAULT_DISK_INFO_TABLE);
+	CTableHandler* p = CCtrlDBHandler::getInstance()->GetTableHandler(DEFAULT_DISK_INFO_TABLE);
     if(!p)
         return -1;
     CVirtualDiskInfoTable *pVDInfoTable = dynamic_cast<CVirtualDiskInfoTable* >(p);
@@ -59,6 +54,10 @@ SetVDInfoWorkItem::process()
     {
         case CH_STATUS:
         {
+            if(m_pMsg == NULL)
+            {
+                return -1;
+            }
             SetVDStatusMessage *pMsg = dynamic_cast<SetVDStatusMessage *> (m_pMsg);
             if(pMsg)
             {
@@ -93,6 +92,10 @@ SetVDInfoWorkItem::process()
         }
         case CREATE_VD:
         {
+            if(m_pMsg == NULL)
+            {
+                return -1;
+            }
             ManageServerCreateVDMessage *pMsg = dynamic_cast<ManageServerCreateVDMessage *> (m_pMsg);
             if(!pMsg)
                 break;
@@ -111,6 +114,21 @@ SetVDInfoWorkItem::process()
             std::cout<<"The vd fs type is "<<pMsg->m_FileSysType<<std::endl; 
 
             break;
+        }
+        case CH_DEC_CAP:
+        {
+            int rt = pVDInfoTable->SetVDDeclaredCapacity(m_iVDID, m_iValue);
+            if(0 > rt)
+            {
+                std::cout<<"SetVDInfoWorkItem db operator error!"<<std::endl;
+                return -1;
+            }
+            std::cout<<"In SetVDInfoWorkItem::process()"<<std::endl;
+            std::cout<<"The CH_DEC_CAP Success! "<<std::endl; 
+
+            m_iOPRes = 1;
+
+            break;  
         }
     }
 

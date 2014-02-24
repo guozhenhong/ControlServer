@@ -110,13 +110,13 @@ public:
 
 };
 
-class GetVDLocateNodeInfoACKMsgSerializer : public MessageSerializer
+class GetVDCapacityInfoACKMsgSerializer : public MessageSerializer
 {
 public:
-    GetVDLocateNodeInfoACKMsgSerializer()
+    GetVDCapacityInfoACKMsgSerializer()
     {}
 
-    virtual ~GetVDLocateNodeInfoACKMsgSerializer()
+    virtual ~GetVDCapacityInfoACKMsgSerializer()
     {}
 
     virtual char *Serialize(Message *pMsg, int *pFullLength)
@@ -151,13 +151,13 @@ public:
     }
 };
 
-class GetVDLocateNodeInfoACKMsgDeserializer : public MessageDeserializer
+class GetVDCapacityInfoACKMsgDeserializer : public MessageDeserializer
 {
 public:
-	GetVDLocateNodeInfoACKMsgDeserializer()
+	GetVDCapacityInfoACKMsgDeserializer()
 	{}
 
-	virtual ~GetVDLocateNodeInfoACKMsgDeserializer()
+	virtual ~GetVDCapacityInfoACKMsgDeserializer()
 	{}
 
 	virtual Message *Deserialize(char *pBuffer)

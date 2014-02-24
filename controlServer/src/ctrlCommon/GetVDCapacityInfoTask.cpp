@@ -48,7 +48,7 @@ int GetVDCapacityInfoTask::goNext()
 	if(!pMsg)
 		return -1;
 
-    GetVDCapacityInfoWorkItem *pWI = new GetVDCapacityInfoWorkItem(pMsg);
+    GetVDCapacityInfoWorkItem *pWI = new GetVDCapacityInfoWorkItem(pMsg->m_iVDID);
    
     pWI->setTaskID(getID());
     g_pDispatcher->postRequest(pWI);

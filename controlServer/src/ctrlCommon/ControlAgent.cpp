@@ -54,6 +54,10 @@
 #include "ctrlCommon/RecvVDFormatResTask.h"
 #include "ctrlCommon/RecvVDLocateNodeInfoTask.h"
 #include "ctrlCommon/RecvVDDeleteResTask.h"
+#include "ctrlCommon/ChangeVDSumCapMessage.h"
+#include "ctrlCommon/ChangeVDSumCapTask.h"
+#include "ctrlCommon/ChangeVDSumFormatCapMessage.h"
+#include "ctrlCommon/RecvVDSumFormatCapChangeResTask.h"
 
 using namespace std;
 
@@ -126,6 +130,12 @@ int ControlAgent::init()
 
     this->RegisterSerializer(MSG_ACK_MANAGER_SERVER_BATCH_DELETE_VD, new ManageServerDeleteBatchVDACKMsgSerializer());
     this->RegisterDeserializer(MSG_MANAGER_SERVER_BATCH_DELETE_VD, new ManageServerDeleteBatchVDMsgDeserializer());
+
+    this->RegisterSerializer(MSG_ACK_CH_VD_CAP, new ChangeVDSumCapACKMsgSerializer());
+    this->RegisterDeserializer(MSG_CHANGE_VD_CAP, new ChangeVDSumCapMsgDeserializer());
+
+    this->RegisterSerializer(MSG_CHANGE_VD_FORMAT_CAP, new ChangeVDSumFormatCapMsgSerializer());
+    this->RegisterDeserializer(MSG_ACK_CH_VD_FORMAT_CAP, new ChangeVDSumFormatCapACKMsgDeserializer());
     
     this->RegisterTaskCreateFunc(MSG_REGISTER_SERVER, RegisterServerInfoTask::createTask<RegisterServerInfoTask>);
 
@@ -150,6 +160,10 @@ int ControlAgent::init()
     this->RegisterTaskCreateFunc(MSG_ACK_FORMAT_VD, RecvVDFormatResTask::createTask<RecvVDFormatResTask>);
 
     this->RegisterTaskCreateFunc(MSG_ACK_DEL_VD, RecvVDDeleteResTask::createTask<RecvVDDeleteResTask>);
+
+    this->RegisterTaskCreateFunc(MSG_CHANGE_VD_CAP, ChangeVDSumCapTask::createTask<ChangeVDSumCapTask>);
+
+    this->RegisterTaskCreateFunc(MSG_ACK_CH_VD_FORMAT_CAP, RecvVDSumFormatCapChangeResTask::createTask<RecvVDSumFormatCapChangeResTask>);
 
     return 0;    
 }
